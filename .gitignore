@@ -1,0 +1,6 @@
+#
+venv/
+*.pyc
+*.db
+config/development.py
+config/production.py
