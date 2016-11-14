@@ -1,10 +1,10 @@
 # -*-coding: utf-8 -*-
 
 from peewee import *
-from dracarys.core.db import BaseModel
+from dracarys.core.db import UUIDBaseModel
 
 
-class Author(BaseModel):
+class Author(UUIDBaseModel):
     """
     作者
     """
@@ -18,7 +18,7 @@ class Author(BaseModel):
         return u'<Author {}>'.format(self.name)
 
 
-class Book(BaseModel):
+class Book(UUIDBaseModel):
     """
     书籍
     """

@@ -19,8 +19,7 @@ environment = os.environ.get('ENVIRONMENT', 'development')
 app.config.from_object('config.{}'.format(environment))
 
 # 初始化数据库（测试环境下使用sqlite数据库测试）
-db = SqliteDatabase(**app.config['SQLITE_DATABASE'])
-# if environment == 'test':
-#     db = SqliteDatabase(**app.config['SQLITE_DATABASE'])
-# else:
-#     db = MySQLDatabase(**app.config['MYSQL_DATABASE'])
+if environment == 'test':
+    db = SqliteDatabase(**app.config['SQLITE_DATABASE'])
+else:
+    db = MySQLDatabase(**app.config['MYSQL_DATABASE'])

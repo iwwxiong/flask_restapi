@@ -93,3 +93,4 @@ venv/
 *.db
 config/development.py
 config/production.py
+.idea/
