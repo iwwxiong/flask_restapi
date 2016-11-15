@@ -1,8 +1,12 @@
 # -*-coding: utf-8 -*-
 
+import re
 from peewee import Model
 from peewee import CharField
 from dracarys import db
+
+
+UUID_REGEXP = re.compile(r'^[0-9a-zA-Z]{32}$')
 
 
 class BaseModel(Model):

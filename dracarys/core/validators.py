@@ -1,7 +1,10 @@
 # -*-coding: utf-8 -*-
 __author__ = 'dracarysX'
 
+from peewee import Model
 from wtforms.validators import ValidationError
+# dracarys import
+from .db import UUID_REGEXP
 
 
 class UniqueValidation(Exception):
@@ -15,6 +18,7 @@ class UniqueValidation(Exception):
 class Unique(object):
     """
     Validators of the peewee model unique.
+    >>> Unique(model, field_name, message)
     """
     field_flags = ('unique', )
 
@@ -37,7 +41,7 @@ class Unique(object):
             model = self.model
         if model is None:
             raise ValidationError(u'model is required.')
-        count = model.select().where(model._meta.fields['name'] == field.data).count()
+        count = model.select().where(model._meta.fields[self.field] == field.data).count()
         if count > 0:
             raise UniqueValidation(self.message)
 
@@ -48,5 +52,14 @@ class Foreign(object):
     """
     field_flags = ('foreign', )
 
-    def __init__(self):
-        pass
+    def __init__(self, message=u''):
+        self.message = message
+
+    def __call__(self, form, field):
+        if not isinstance(field.data, Model) and not UUID_REGEXP.search(field.data):
+            try:
+                int(field.data)
+            except TypeError:
+                raise ValidationError(self.message)
+            return
+        return ValidationError(self.message)
