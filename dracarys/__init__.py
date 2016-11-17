@@ -3,7 +3,12 @@
 import os
 from flask import Flask
 from flask_bcrypt import Bcrypt
+from flask import jsonify
 from peewee import MySQLDatabase, SqliteDatabase
+# dracarys import
+from .middlewares.method_override import HTTPMethodOverrideMiddleware
+from .core.exceptions import APIError
+from .core.responses import APIResponse
 
 
 app = Flask(__name__, instance_relative_config=True)
@@ -23,3 +28,27 @@ if environment == 'test':
     db = SqliteDatabase(**app.config['SQLITE_DATABASE'])
 else:
     db = MySQLDatabase(**app.config['MYSQL_DATABASE'])
+
+# 全局指定response_class为APIResponse。正式不建议这么用
+app.response_class = APIResponse
+
+# 中间件
+app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
+
+# 错误处理
+# 注册方式一(装饰器模式)
+# app.errorhandler(APIError)(lambda e: jsonify({
+#     'status': {
+#         'code': e.code,
+#         'message': e.message
+#     },
+#     'data': []
+# }))
+# 注册方式二
+app.register_error_handler(APIError, lambda e: jsonify({
+    'status': {
+        'code': e.code,
+        'message': e.message
+    },
+    'data': []
+}))
