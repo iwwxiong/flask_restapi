@@ -1,21 +1,10 @@
-# -*-coding: utf-8 -*-
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from peewee import *
+# dracarys import
 from dracarys.core.db import UUIDBaseModel
-
-
-class Author(UUIDBaseModel):
-    """
-    作者
-    """
-    id = PrimaryKeyField()
-    name = CharField(max_length=50, unique=True)
-
-    class Meta:
-        db_table = 'Author'
-
-    def __repr__(self):
-        return u'<Author {}>'.format(self.name)
+from dracarys.author.models import Author
 
 
 class Book(UUIDBaseModel):
@@ -31,3 +20,5 @@ class Book(UUIDBaseModel):
 
     def __repr__(self):
         return u'<Book {}>'.format(self.name)
+
+
