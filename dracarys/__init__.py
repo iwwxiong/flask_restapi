@@ -6,12 +6,13 @@ from flask_bcrypt import Bcrypt
 from flask import jsonify
 from peewee import MySQLDatabase, SqliteDatabase
 # dracarys import
+from .core.app import APIFlask
 from .middlewares.method_override import HTTPMethodOverrideMiddleware
 from .core.exceptions import APIError
 from .core.responses import APIResponse
 
+app = APIFlask(__name__, instance_relative_config=True)
 
-app = Flask(__name__, instance_relative_config=True)
 bcrypt = Bcrypt(app)
 
 # 加载默认配置
@@ -28,9 +29,6 @@ if environment == 'test':
     db = SqliteDatabase(**app.config['SQLITE_DATABASE'])
 else:
     db = MySQLDatabase(**app.config['MYSQL_DATABASE'])
-
-# 全局指定response_class为APIResponse。正式不建议这么用
-app.response_class = APIResponse
 
 # 中间件
 app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
@@ -52,3 +50,7 @@ app.register_error_handler(APIError, lambda e: jsonify({
     },
     'data': []
 }))
+
+# 载入blueprint
+from .author import author_blueprint
+app.register_blueprint(author_blueprint)

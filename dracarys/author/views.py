@@ -2,20 +2,21 @@
 # -*- coding: utf-8 -*-
 
 from flask.views import MethodView
-from flask import Blueprint
 from flask import request, g, current_app
 # dracarys import
 from dracarys.author.models import Author
-
-book_blueprint = Blueprint('book', __name__, url_prefix='/books')
+from dracarys.core.responses import APIResponse
 
 
 class AuthorView(MethodView):
     """
 
     """
+    model = Author
+
     def get(self):
-        pass
+        print request.args
+        return [1, 3, 4]
 
     def post(self):
         pass

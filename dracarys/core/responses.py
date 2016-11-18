@@ -3,11 +3,8 @@
 
 __author__ = 'dracarysX'
 
-from flask.json import dumps
 from flask import Response
 from werkzeug._compat import string_types, text_type
-# dracarys import
-from .exceptions import APIError
 
 
 class APIResponse(Response):
@@ -20,9 +17,8 @@ class APIResponse(Response):
         },
         'data': []
     }
+    可解释视图直接返回dict, list, string, response
     """
-    indent = 2
-    separators = (', ', ': ')
     default_mimetype = 'application/json'
 
     def __init__(self, content=None, *args, **kwargs):
@@ -36,5 +32,4 @@ class APIResponse(Response):
                     },
                     'data': content
                 }
-            self.set_data((dumps(content, indent=self.indent, separators=self.separators), '\n'))
-        raise APIError(code=500, message='syntax error')
+            self.set_data(content)
