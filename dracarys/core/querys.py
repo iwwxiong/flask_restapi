@@ -4,6 +4,7 @@
 from werkzeug.wrappers import Request, MultiDict, ImmutableMultiDict
 
 
+
 class BaseQuery(object):
     """
 

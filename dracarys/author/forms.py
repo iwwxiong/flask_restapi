@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from wtforms import Form
-from wtforms import StringField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField, IntegerField
+from wtforms.validators import DataRequired, Length, NumberRange
 # dracarys import
 from dracarys.author.models import Author
 from dracarys.core.validators import Unique
@@ -18,6 +18,10 @@ class AuthorForm(Form):
             field='name',
             message=u'该作者姓名已存在。'
         )]
+    )
+    age = IntegerField(
+        label=u'年龄',
+        validators=[DataRequired(), NumberRange(0, 150)]
     )
 
     class Meta:

@@ -11,6 +11,7 @@ class Author(UUIDBaseModel):
     """
     id = PrimaryKeyField()
     name = CharField(max_length=50, unique=True)
+    age = IntegerField(default=0, unique=True)
 
     class Meta:
         db_table = 'Author'
