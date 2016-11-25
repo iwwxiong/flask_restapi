@@ -8,7 +8,7 @@ class BaseCondition(object):
     """
     __name__ = 'base'
 
-    def __init__(self, model, field, value):
+    def __init__(self, model, field=None, value=None):
         self.model = model
         self.field = field
         self.value = value
@@ -88,7 +88,7 @@ class Like(BaseCondition):
         return [self.field_obj % self.value]
 
 
-class Like(BaseCondition):
+class ILike(BaseCondition):
     """
 
     """
@@ -106,3 +106,16 @@ class In(BaseCondition):
 
     def to_peewee(self):
         return [self.field_obj << self.value]
+
+
+mappings = {
+    'eq': Eq,
+    'neq': Neq,
+    'gt': Gt,
+    'gte': Gte,
+    'lt': Lt,
+    'lte': Lte,
+    'like': Like,
+    'ilike': ILike,
+    'in': In
+}
