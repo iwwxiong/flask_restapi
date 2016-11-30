@@ -105,7 +105,11 @@ class In(BaseCondition):
     __name__ = 'in'
 
     def to_peewee(self):
-        return [self.field_obj << self.value]
+        if isinstance(self.value, list):
+            return [self.field_obj << self.value]
+        # >>> eval('[24, 25]')
+        # [24, 25]
+        return [self.field_obj << eval(self.value)]
 
 
 mappings = {

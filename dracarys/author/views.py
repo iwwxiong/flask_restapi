@@ -5,18 +5,20 @@ from flask.views import MethodView
 from flask import request, g, current_app
 # dracarys import
 from dracarys.author.models import Author
-from dracarys.core.responses import APIResponse
+from dracarys.core.querys import PeeweeObjectMixin
+from dracarys.core.views import APIMethodView
 
 
-class AuthorView(MethodView):
+class AuthorView(PeeweeObjectMixin, APIMethodView):
     """
 
     """
     model = Author
+    paginate_by = 10
 
     def get(self):
-        print request.args
-        return [1, 3, 4]
+        object_list = self.get_query()
+        return [obj.id for obj in object_list]
 
     def post(self):
         pass

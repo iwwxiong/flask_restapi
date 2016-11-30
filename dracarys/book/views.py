@@ -1,23 +1,25 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask.views import MethodView
 from flask import Blueprint
 from flask import request, g, current_app
 # dracarys import
-from .models import Book
+from dracarys.book.models import Book
+from dracarys.core.querys import PeeweeObjectMixin
+from dracarys.core.views import APIMethodView
 
-book_blueprint = Blueprint('book', __name__, url_prefix='/books')
 
-
-class BookView(MethodView):
+class BookView(PeeweeObjectMixin, APIMethodView):
     """
 
     """
     model = Book
+    paginate_by = 10
 
     def get(self):
-        pass
+        object_list = self.get_query()
+        serializer = self.serializer_class(object_list=object_list, select_args=self._select_args)
+        return serializer.data()
 
     def post(self):
         pass

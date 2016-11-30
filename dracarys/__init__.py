@@ -53,4 +53,6 @@ app.register_error_handler(APIError, lambda e: jsonify({
 
 # 载入blueprint
 from .author import author_blueprint
+from .book import book_blueprint
 app.register_blueprint(author_blueprint)
+app.register_blueprint(book_blueprint)

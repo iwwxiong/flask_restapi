@@ -3,12 +3,9 @@
 
 from flask import Blueprint
 # dracarys import
+from dracarys.core.utils import register_api
 from .views import AuthorView
 
 author_blueprint = Blueprint('authors', __name__, url_prefix='/authors')
-author_view = AuthorView.as_view('authors')
-
-author_blueprint.add_url_rule('', view_func=author_view, methods=['GET', ])
-author_blueprint.add_url_rule('', view_func=author_view, methods=['POST', ])
-author_blueprint.add_url_rule('/<author_id>', view_func=author_view, methods=['GET', ])
-author_blueprint.add_url_rule('/<author_id>', view_func=author_view, methods=['PUT', 'DELETE', ])
+# 注册路由
+register_api(bp=author_blueprint, view=AuthorView, endpoint='authors', pk='author_id')
