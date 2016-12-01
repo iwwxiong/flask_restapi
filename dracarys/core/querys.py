@@ -3,6 +3,8 @@
 
 import re
 from werkzeug.wrappers import ImmutableMultiDict
+# dracarys import
+from .parsers import QueryParser
 
 
 class QueryException(Exception):
@@ -25,28 +27,28 @@ class BaseQuery(object):
         raise NotImplementedError()
 
 
-class PeeweeObjectMixin(object):
+class PeeweeObjectMixin(QueryParser):
     """
-    参数查询参考http://postgrest.com/api/reading/。
+    [API参数设计参考文档](http://postgrest.com/api/reading/)。
     """
-    def query(self):
+    def query(self, where=None):
         query = self.pre_select()
         while len(self.joins) > 0:
             _obj = self.joins.pop()
             query = query.join(dest=_obj)
-        where = self.where()
+        where = where or self.where()
         if len(where) == 0:
             return query.order_by(*self.order())
         return query.where(*where).order_by(*self.order())
 
-    def get_query(self):
+    def get_query(self, where=None):
         """
 
         :return:
         """
         if hasattr(self, '_query'):
             return self._query
-        self._query = self.query()
+        self._query = self.query(where=where)
         return self._query
 
     def count(self):
@@ -61,4 +63,5 @@ class PeeweeObjectMixin(object):
         分页查询
         :return:
         """
-        return self.get_query()(*self.paginate())
+        return self.get_query().paginate(*self.paginate())
+

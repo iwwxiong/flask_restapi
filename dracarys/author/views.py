@@ -9,22 +9,10 @@ from dracarys.core.querys import PeeweeObjectMixin
 from dracarys.core.views import APIMethodView
 
 
-class AuthorView(PeeweeObjectMixin, APIMethodView):
+class AuthorView(APIMethodView):
     """
 
     """
     model = Author
     paginate_by = 10
 
-    def get(self):
-        object_list = self.get_query()
-        return [obj.id for obj in object_list]
-
-    def post(self):
-        pass
-
-    def put(self):
-        pass
-
-    def delete(self):
-        pass

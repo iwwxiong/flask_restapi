@@ -5,6 +5,8 @@ __author__ = 'dracarysX'
 
 from flask import Response
 from werkzeug._compat import string_types, text_type
+# dracarys import
+from .renders import JSONRender
 
 
 class APIResponse(Response):
@@ -23,13 +25,10 @@ class APIResponse(Response):
 
     def __init__(self, content=None, *args, **kwargs):
         super(APIResponse, self).__init__(response=None, *args, **kwargs)
-        if isinstance(content, (list, dict, text_type, string_types)):
-            if isinstance(content, (list, text_type, string_types)):
-                content = {
-                    'status': {
-                        'code': 0,
-                        'message': ''
-                    },
-                    'data': content
-                }
-            self.set_data(content)
+        if isinstance(content, (JSONRender, list, dict, text_type, string_types)):
+            if isinstance(content, JSONRender):
+                _content = content.render()
+            elif isinstance(content, (dict, list, text_type, string_types)):
+                _content = JSONRender(data=content).render()
+            self.set_data(_content)
+

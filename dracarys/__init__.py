@@ -33,24 +33,6 @@ else:
 # 中间件
 app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
 
-# 错误处理
-# 注册方式一(装饰器模式)
-# app.errorhandler(APIError)(lambda e: jsonify({
-#     'status': {
-#         'code': e.code,
-#         'message': e.message
-#     },
-#     'data': []
-# }))
-# 注册方式二
-app.register_error_handler(APIError, lambda e: jsonify({
-    'status': {
-        'code': e.code,
-        'message': e.message
-    },
-    'data': []
-}))
-
 # 载入blueprint
 from .author import author_blueprint
 from .book import book_blueprint

@@ -2,18 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import re
-import peewee
 
 
-class JSONRender(object):
-    """
-
-    """
-    def render(self):
-        pass
-
-
-class APIParser(object):
+class QueryParser(object):
     """
 
     """
@@ -26,6 +17,7 @@ class APIParser(object):
         from flask import request
         from .conditions import mappings
         self.args = request.args
+        self.view_args = request.view_args
         self.mappings = mappings
         self.joins = set()
         self._select_args = self._args_split(select=self.args['select']) if 'select' in self.args else []
@@ -147,7 +139,8 @@ class APIParser(object):
         :return:
         """
         page = int(self.args.get(self.page_param, 1))
-        return [page, self.paginate_by or 10]
+        limit = int(self.args['limit']) if 'limit' in self.args else self.paginate_by or 10
+        return [page, limit]
 
     def pre_select(self):
         if 'select' not in self.args:

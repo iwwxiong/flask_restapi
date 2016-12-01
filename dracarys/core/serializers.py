@@ -84,6 +84,8 @@ class BaseSerializer(object):
                 else:
                     _serializer(arg)
 
+        if len(self.select_args) == 0:
+            return self._obj_serializer(obj)
         _serializer(self.select_args)
         return d
 
@@ -94,7 +96,7 @@ class BaseSerializer(object):
         """
         if self.obj is not None:
             return self.serializer(obj=self.obj)
-        return {'items': [self.serializer(obj=obj) for obj in self.object_list]}
+        return [self.serializer(obj=obj) for obj in self.object_list]
 
 
 class PeeweeSerializer(BaseSerializer):
