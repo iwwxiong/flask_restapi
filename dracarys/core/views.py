@@ -23,7 +23,12 @@ class SingleObjectMixin(PeeweeObjectMixin):
         return [self.model._meta.fields[self.pk_field] == self.view_args[self.pk_url_kwarg]]
 
     def get_obj(self):
-        return self.get_query(where=self._where())
+        try:
+            obj = self.get_query(where=self._where())[0]
+        except IndexError:
+            obj = None
+        self.obj = obj
+        return self.obj
 
 
 class FormMixin(SingleObjectMixin):
@@ -61,9 +66,8 @@ class DetailMixin(SingleObjectMixin):
     serializer_class = PeeweeSerializer
 
     def _detail(self):
-        try:
-            obj = self.get_obj()[0]
-        except IndexError:
+        obj = self.get_obj()
+        if obj is None:
             raise APIError404()
         serializer = self.serializer_class(obj=obj, select_args=self._select_args)
         return serializer.data()
