@@ -7,12 +7,12 @@ from wtforms.validators import ValidationError
 from .db import UUID_REGEXP
 
 
-class UniqueValidation(Exception):
+class UniqueValidation(ValidationError):
     """
     unique validation.
     """
     def __init__(self, message='', *args, **kwargs):
-        Exception.__init__(self, message, *args, **kwargs)
+        ValidationError.__init__(self, message, *args, **kwargs)
 
 
 class Unique(object):

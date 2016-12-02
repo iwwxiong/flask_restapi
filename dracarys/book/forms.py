@@ -1,17 +1,17 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from wtforms import Form
 from wtforms import StringField
 from wtforms.validators import DataRequired, Length
 # dracarys import
-from dracarys.author.models import Author
-from dracarys.book.models import Book
 from dracarys.core.validators import Unique, Foreign
 from dracarys.core.fields import ForeignField
+from dracarys.core.forms import PeeweeForm
+from dracarys.author.models import Author
+from dracarys.book.models import Book
 
 
-class BookForm(Form):
+class BookForm(PeeweeForm):
     """
     书籍表单
     """

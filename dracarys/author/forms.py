@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from wtforms import Form
 from wtforms import StringField, IntegerField
 from wtforms.validators import DataRequired, Length, NumberRange
 # dracarys import
-from dracarys.author.models import Author
+from dracarys.core.forms import PeeweeForm
 from dracarys.core.validators import Unique
+from dracarys.author.models import Author
 
 
-class AuthorForm(Form):
+class AuthorForm(PeeweeForm):
     """
     作者表单
     """

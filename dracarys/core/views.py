@@ -4,12 +4,14 @@
 __author__ = '10000573'
 
 import math
+import json
+from flask import request
 from flask.views import MethodView
 # dracarys import
-from exceptions import APIError404
-from .parsers import QueryParser
+from exceptions import APIError, APIError404
 from .serializers import PeeweeSerializer
 from .querys import PeeweeObjectMixin
+from .renders import JSONRender
 
 
 class SingleObjectMixin(PeeweeObjectMixin):
@@ -27,15 +29,36 @@ class SingleObjectMixin(PeeweeObjectMixin):
             obj = self.get_query(where=self._where())[0]
         except IndexError:
             obj = None
-        self.obj = obj
-        return self.obj
+        return obj
 
 
-class FormMixin(SingleObjectMixin):
+class FormMixin(object):
     """
 
     """
     form_class = None
+
+    def get_form_class(self):
+        return self.form_class
+
+    def get_form(self, obj=None):
+        form = self.form_class(formdata=request.form, obj=obj)
+        self.form_obj = form
+        return self.form_obj
+
+    def form_valid(self):
+        """
+        save form instance
+        """
+        obj = self.form_obj.save()
+        return obj
+
+    def form_invalid(self):
+        """
+        render response
+        """
+        errors = self.form_obj.errors
+        raise APIError(code=409, message='; '.join(['%s: %s' % (k, '; '.join(v)) for k, v in errors.items()]))
 
 
 class MultiObjectMixin(PeeweeObjectMixin):
@@ -65,8 +88,8 @@ class DetailMixin(SingleObjectMixin):
 
     serializer_class = PeeweeSerializer
 
-    def _detail(self):
-        obj = self.get_obj()
+    def _detail(self, obj=None):
+        obj = obj or self.get_obj()
         if obj is None:
             raise APIError404()
         serializer = self.serializer_class(obj=obj, select_args=self._select_args)
@@ -101,7 +124,12 @@ class CreateMixin(FormMixin):
     """
     """
     def _create(self):
-        pass
+        self.obj = None
+        form = self.get_form(obj=self.obj)
+        if not form.validate():
+            return self.form_invalid()
+        obj = self.form_valid()
+        return {'id': obj.id}
 
 
 class CreateView(CreateMixin, MethodView):
@@ -109,14 +137,19 @@ class CreateView(CreateMixin, MethodView):
 
     """
     def post(self):
-        pass
+        return self._create()
 
 
 class UpdateMixin(FormMixin):
     """
     """
     def _update(self):
-        pass
+        obj = self.get_obj()
+        form = self.get_form(obj)
+        if not form.validate():
+            return self.form_invalid()
+        obj = self.form_valid()
+        return {'id': obj.id}
 
 
 class UpdateView(UpdateMixin, MethodView):
@@ -124,21 +157,23 @@ class UpdateView(UpdateMixin, MethodView):
 
     """
     def put(self):
-        pass
+        return self._update()
 
 
-class DeleteMixin(FormMixin):
+class DeleteMixin(FormMixin, SingleObjectMixin):
     """
     """
     def _delete(self):
-        pass
+        obj = self.get_obj()
+        obj.delete()
+        return JSONRender(message=u'删除成功。')
 
 
 class DeleteView(DeleteMixin, MethodView):
     """
     """
     def delete(self):
-        pass
+        return self._delete()
 
 
 class APIMethodView(DetailMixin, ListMixin, CreateMixin, UpdateMixin, DeleteMixin, MethodView):

@@ -4,9 +4,9 @@
 from flask.views import MethodView
 from flask import request, g, current_app
 # dracarys import
-from dracarys.author.models import Author
-from dracarys.core.querys import PeeweeObjectMixin
 from dracarys.core.views import APIMethodView
+from .models import Author
+from .forms import AuthorForm
 
 
 class AuthorView(APIMethodView):
@@ -15,4 +15,6 @@ class AuthorView(APIMethodView):
     """
     model = Author
     paginate_by = 10
-
+    context_object_name = 'items'
+    pk_url_kwarg = 'author_id'
+    form_class = AuthorForm
