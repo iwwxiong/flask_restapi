@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from wtforms import StringField, IntegerField
+from wtforms import IntegerField
 from wtforms.validators import DataRequired, Length, NumberRange
 # dracarys import
+from dracarys.core.fields import StringField
 from dracarys.core.forms import PeeweeForm
 from dracarys.core.validators import Unique
 from dracarys.author.models import Author

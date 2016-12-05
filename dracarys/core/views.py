@@ -88,7 +88,7 @@ class DetailMixin(SingleObjectMixin):
 
     serializer_class = PeeweeSerializer
 
-    def _detail(self, obj=None):
+    def _detail(self, obj=None, **kwargs):
         obj = obj or self.get_obj()
         if obj is None:
             raise APIError404()
@@ -107,7 +107,7 @@ class DetailView(DetailMixin, MethodView):
 class ListMixin(MultiObjectMixin):
     """
     """
-    def _list(self):
+    def _list(self, **kwargs):
         context = self.get_context_data()
         return context
 
@@ -123,7 +123,7 @@ class ListView(ListMixin, MethodView):
 class CreateMixin(FormMixin):
     """
     """
-    def _create(self):
+    def _create(self, **kwargs):
         self.obj = None
         form = self.get_form(obj=self.obj)
         if not form.validate():
@@ -143,7 +143,7 @@ class CreateView(CreateMixin, MethodView):
 class UpdateMixin(FormMixin):
     """
     """
-    def _update(self):
+    def _update(self, **kwargs):
         obj = self.get_obj()
         form = self.get_form(obj)
         if not form.validate():
@@ -163,9 +163,10 @@ class UpdateView(UpdateMixin, MethodView):
 class DeleteMixin(FormMixin, SingleObjectMixin):
     """
     """
-    def _delete(self):
+    def _delete(self, **kwargs):
         obj = self.get_obj()
-        obj.delete()
+        # obj.delete().execute()
+        obj.delete_instance()
         return JSONRender(message=u'删除成功。')
 
 
@@ -182,14 +183,14 @@ class APIMethodView(DetailMixin, ListMixin, CreateMixin, UpdateMixin, DeleteMixi
     """
     def get(self, **kwargs):
         if self.pk_url_kwarg in kwargs:
-            return self._detail()
-        return self._list()
+            return self._detail(**kwargs)
+        return self._list(**kwargs)
 
     def post(self):
         return self._create()
 
     def put(self, **kwargs):
-        return self._update()
+        return self._update(**kwargs)
 
     def delete(self, **kwargs):
-        return self._delete()
+        return self._delete(**kwargs)

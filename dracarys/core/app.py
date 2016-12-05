@@ -3,7 +3,9 @@
 
 import sys
 from flask import Flask, request
+from flask._compat import reraise
 from werkzeug._compat import string_types, text_type
+from werkzeug.exceptions import HTTPException
 # dracarys import
 from .responses import APIResponse
 from .renders import JSONRender
@@ -65,5 +67,13 @@ class APIFlask(Flask):
         if isinstance(e, APIError):
             return self.handle_api_exception(e)
 
-        # 暂不处理http异常，让系统抛出
-        super(self.__class__, self).handle_user_exception(e)
+        # hook HttpException and return handle_api_exception
+        if isinstance(e, HTTPException) and not self.trap_http_exception(e):
+            # return self.handle_http_exception(e)
+            return self.handle_api_exception(e)
+
+        handler = self._find_error_handler(e)
+
+        if handler is None:
+            reraise(exc_type, exc_value, tb)
+        return handler(e)

@@ -3,6 +3,7 @@ __author__ = 'dracarysX'
 
 from peewee import Model
 from wtforms.validators import ValidationError
+from wtforms.compat import string_types
 # dracarys import
 from .db import UUID_REGEXP
 
@@ -41,9 +42,10 @@ class Unique(object):
             model = self.model
         if model is None:
             raise ValidationError(u'model is required.')
-        count = model.select().where(model._meta.fields[self.field] == field.data).count()
-        if count > 0:
-            raise UniqueValidation(self.message)
+        if form.obj is None or field.data != getattr(form.obj, self.field):
+            count = model.select().where(model._meta.fields[self.field] == field.data).count()
+            if count > 0:
+                raise UniqueValidation(self.message)
 
 
 class Foreign(object):
@@ -52,14 +54,23 @@ class Foreign(object):
     """
     field_flags = ('foreign', )
 
-    def __init__(self, message=u''):
-        self.message = message
+    def __init__(self, model, message=None):
+        self.model = model
+        self.message = message or 'must be peewee model instance or int or uuid string.'
 
     def __call__(self, form, field):
-        if not isinstance(field.data, Model) and not UUID_REGEXP.search(field.data):
-            try:
-                int(field.data)
-            except TypeError:
-                raise ValidationError(self.message)
+        if isinstance(field.data, Model):
             return
-        return ValidationError(self.message)
+        if isinstance(field.data, string_types) and UUID_REGEXP.search(field.data):
+            try:
+                obj = self.model.get(uuid=field.data)
+            except self.model.DoesNotExist:
+                raise ValidationError(self.message)
+            field.data = obj
+            return
+        try:
+            obj = self.model.get(id=field.data)
+        except self.model.DoesNotExist:
+            raise ValidationError(self.message)
+        field.data = obj
+        return

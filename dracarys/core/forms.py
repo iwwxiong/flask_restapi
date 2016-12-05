@@ -15,7 +15,7 @@ class PeeweeFormException(Exception):
 
 class PeeweeForm(Form):
     """
-
+    form for peewee model instance. # 暂不实现类似django ModelForm功能
     """
     def __init__(self, formdata=None, obj=None, data=None, *args, **kwargs):
         super(PeeweeForm, self).__init__(formdata=formdata, obj=obj, data=data, *args, **kwargs)
@@ -42,8 +42,6 @@ class PeeweeForm(Form):
         return self.obj
 
     def _save_instance(self):
-        if self.obj is not None and self.obj.id:
-            return self.obj
         if not self._validate:
             raise PeeweeFormException(u'validate is false.')
         self.obj = self.create() if self.obj is None else self.update()
