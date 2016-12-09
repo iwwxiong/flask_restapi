@@ -1,26 +1,28 @@
 # -*-coding: utf-8 -*-
 
-import re
-from peewee import Model
-from peewee import CharField
-from dracarys import db
+from peewee import Model, Proxy
+
+db = Proxy()
 
 
-UUID_REGEXP = re.compile(r'^[0-9a-zA-Z]{32}$')
+class Database(object):
+    def __init__(self, app=None, database=None):
+        self.app = app
+        self.database = database
+        if self.app is not None:
+            self.register_handlers()
+        self.init_database()
 
+    def init_database(self):
+        db.initialize(self.database)
 
-class BaseModel(Model):
-    class Meta:
-        database = db
+    def connect_db(self):
+        self.database.connect()
 
+    def close_db(self, exc):
+        if not self.database.is_closed():
+            self.database.close()
 
-def _uuid():
-    import uuid
-    return uuid.uuid4().hex
-
-
-class UUIDBaseModel(BaseModel):
-    """
-    自动添加uuid(高并发可能产生问题，暂忽略)
-    """
-    uuid = CharField(default=_uuid, unique=True)
+    def register_handlers(self):
+        self.app.before_request(self.connect_db)
+        self.app.teardown_request(self.close_db)

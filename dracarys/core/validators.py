@@ -5,7 +5,7 @@ from peewee import Model
 from wtforms.validators import ValidationError
 from wtforms.compat import string_types
 # dracarys import
-from .db import UUID_REGEXP
+from .model import UUID_REGEXP
 
 
 class UniqueValidation(ValidationError):

@@ -1,11 +1,7 @@
 # -*-coding: utf-8 -*-
 __author__ = 'dracarysX'
 
-from peewee import Model
 from wtforms import Field, StringField
-from wtforms.compat import text_type
-# dracarys import
-from .db import UUID_REGEXP
 
 
 class StringField(StringField):

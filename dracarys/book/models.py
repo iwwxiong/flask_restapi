@@ -3,7 +3,7 @@
 
 from peewee import *
 # dracarys import
-from dracarys.core.db import UUIDBaseModel
+from dracarys.core.model import UUIDBaseModel
 from dracarys.author.models import Author
 
 

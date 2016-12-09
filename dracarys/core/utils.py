@@ -1,8 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import re
-
 
 def register_api(bp, view, endpoint, pk='id', pk_type='int'):
     """

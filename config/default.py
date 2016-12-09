@@ -13,13 +13,10 @@ PERMANENT_SESSION_LIFETIME = 3600 * 24 * 7  # 7天
 
 # Database
 
-# sqlite
-SQLITE_DATABASE = {
-    'database': 'dracarysX.db'
-}
-
 # mysql
-MYSQL_DATABASE = {
+from peewee import MySQLDatabase
+DB_ENGINE = MySQLDatabase
+DATABASE = {
     'database': 'dracarysX',
     'user': 'root',
     'passwd': '',
