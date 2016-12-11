@@ -11,6 +11,8 @@ class UnitTest(Command):
     """
 
     """
+    command_name = 'runtest'
+
     def run(self):
         """Run unit tests."""
         tests = unittest.TestLoader().discover('tests', pattern='test_*.py')

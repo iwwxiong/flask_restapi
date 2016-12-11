@@ -3,6 +3,7 @@
 """
 default config.
 """
+from peewee import MySQLDatabase
 
 DEBUG = True
 SECRET_KEY = 'dracarysX'
@@ -14,8 +15,9 @@ PERMANENT_SESSION_LIFETIME = 3600 * 24 * 7  # 7天
 # Database
 
 # mysql
-from peewee import MySQLDatabase
+
 DB_ENGINE = MySQLDatabase
+
 DATABASE = {
     'database': 'dracarysX',
     'user': 'root',

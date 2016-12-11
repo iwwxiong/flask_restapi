@@ -1,13 +1,10 @@
 # -*-coding: utf-8 -*-
 
 import os
-from flask import Flask
 from flask_bcrypt import Bcrypt
-from flask import jsonify
-from peewee import MySQLDatabase, SqliteDatabase
 # dracarys import
-from .core.app import APIFlask
 from .middlewares.method_override import HTTPMethodOverrideMiddleware
+from .core.app import APIFlask
 from .core.exceptions import APIError
 from .core.responses import APIResponse
 from .core.db import Database

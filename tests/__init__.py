@@ -4,6 +4,7 @@
 import unittest
 # dracarys import
 from dracarys import create_app
+from scripts import create_tables
 
 
 class BaseTestCase(unittest.TestCase):
@@ -14,8 +15,7 @@ class BaseTestCase(unittest.TestCase):
     def setUpClass(cls):
         # 载入测试配置
         app = create_app(testing=True)
-        from dracarys.core.db import db
-        print db.database
+        cls.app = app
 
 
 class DBTestCase(BaseTestCase):
@@ -25,4 +25,4 @@ class DBTestCase(BaseTestCase):
     @classmethod
     def setUpClass(cls):
         # 初始化数据库
-        pass
+        create_tables()

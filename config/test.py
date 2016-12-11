@@ -3,10 +3,10 @@
 """
 config for tests.
 """
+from peewee import SqliteDatabase
 
 TESTING = True
 
-from peewee import SqliteDatabase
 DB_ENGINE = SqliteDatabase
 
 # sqlite
