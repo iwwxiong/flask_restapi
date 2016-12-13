@@ -71,7 +71,7 @@ class QueryParser(object):
             """
             new_obj = o
             for v in f.split('.'):
-                if new_obj is not  None and v in new_obj._meta.fields:
+                if new_obj is not None and v in new_obj._meta.fields:
                     new_obj = new_obj._meta.fields[v].rel_model
                 else:
                     new_obj = None

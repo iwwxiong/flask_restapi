@@ -7,7 +7,7 @@ from tests import BaseTestCase
 from dracarys.core.renders import JSONRender
 
 
-class TestJSONRender(BaseTestCase):
+class JSONRenderTests(BaseTestCase):
     """
 
     """

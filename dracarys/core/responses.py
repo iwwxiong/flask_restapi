@@ -7,6 +7,7 @@ from flask import Response
 from werkzeug._compat import string_types, text_type
 # dracarys import
 from .renders import JSONRender
+from .exceptions import APIError
 
 
 class APIResponse(Response):
@@ -19,12 +20,14 @@ class APIResponse(Response):
         },
         'data': []
     }
-    可解释视图直接返回dict, list, string, response
+    可视图直接返回dict, list, string, response
     """
     default_mimetype = 'application/json'
 
     def __init__(self, content=None, *args, **kwargs):
-        super(APIResponse, self).__init__(response=None, *args, **kwargs)
+        super(APIResponse, self).__init__(None, *args, **kwargs)
+        if content is None:
+            content = []
         if isinstance(content, (JSONRender, list, dict, text_type, string_types)):
             if isinstance(content, JSONRender):
                 _content = content.render()
@@ -32,3 +35,6 @@ class APIResponse(Response):
                 _content = JSONRender(data=content).render()
             self.set_data(_content)
 
+        # From `werkzeug.wrappers.BaseResponse`
+        else:
+            self.response = content
