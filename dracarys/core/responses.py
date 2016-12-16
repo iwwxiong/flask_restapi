@@ -3,6 +3,7 @@
 
 __author__ = 'dracarysX'
 
+import json
 from flask import Response
 from werkzeug._compat import string_types, text_type
 # dracarys import
@@ -38,3 +39,10 @@ class APIResponse(Response):
         # From `werkzeug.wrappers.BaseResponse`
         else:
             self.response = content
+
+    def get_json(self):
+        """
+        返回json数据
+        :return:
+        """
+        return json.loads(self.get_data().decode('utf8'))

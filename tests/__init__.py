@@ -4,7 +4,7 @@
 import unittest
 # dracarys import
 from dracarys import create_app
-from scripts import create_tables
+from scripts import create_tables, drop_tables
 
 
 class BaseTestCase(unittest.TestCase):
@@ -26,3 +26,8 @@ class DBTestCase(BaseTestCase):
     def setUpClass(cls):
         # 初始化数据库
         create_tables()
+
+    @classmethod
+    def tearDownClass(cls):
+        drop_tables()
+        pass
