@@ -30,4 +30,3 @@ class DBTestCase(BaseTestCase):
     @classmethod
     def tearDownClass(cls):
         drop_tables()
-        pass

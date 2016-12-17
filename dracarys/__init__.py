@@ -40,4 +40,11 @@ def create_app(testing=False):
     app.register_blueprint(author_blueprint)
     app.register_blueprint(book_blueprint)
 
+    @app.route('/')
+    def index():
+        return {
+            'author': '/authors',
+            'book': '/books'
+        }
+
     return app
