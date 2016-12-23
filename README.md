@@ -23,6 +23,20 @@
 	
 然后我们就可以直接访问`http://127.0.0.1:5000`。目前脚手架中间实现了`Book`和`Author`两个简单测试app。
 
+## 查询API
+
+查询姓名为`dracarys`且姓名大于等于25岁的作者，且仅返回作者姓名、ID、年龄。
+
+    /authors?select=id,age,name&name=like.dracarys&age=gte.25
+    
+查询名称名称为`Python`的书籍，且返回书籍ID、名称、书籍作者ID、作者名称。
+
+    /books?select=id,name,author{id,name}&name=like.Python
+    
+查询作者姓名，年龄。返回第2页且分页数为10的数据，并按照ID降序排列。
+
+    /authors?select=name,age&page=2&limit=10&order=id.desc
+
 ## 简单使用
 
 ### 定义模型
@@ -74,7 +88,7 @@
     pk_url_kwarg = 'author_id'
     form_class = AuthorForm
     
-以上三部我们就基本实现了`Author`的基本增删查改了。
+以上三步我们就基本实现了`Author`的基本增删改查了。
 
 	> curl http://127.0.0.1:5000/authors
 	{"status": {"message": "200 OK", "code": 0}, "data": {"count": 0, "items": [], "limit": 10, "page": 1, "max_page": 0}}
