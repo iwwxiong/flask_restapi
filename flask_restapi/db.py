@@ -1,6 +1,6 @@
 # -*-coding: utf-8 -*-
 
-from peewee import Model, Proxy
+from peewee import Proxy
 
 db = Proxy()
 

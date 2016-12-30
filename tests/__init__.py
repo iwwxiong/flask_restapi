@@ -2,9 +2,17 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-# dracarys import
-from dracarys import create_app
-from scripts import create_tables, drop_tables
+# flask_restapi import
+
+
+def clear_tables(model):
+    """
+    清空表数据
+    :return:
+    """
+    q = model.delete()
+    q.execute()
+    return
 
 
 class BaseTestCase(unittest.TestCase):
@@ -13,20 +21,27 @@ class BaseTestCase(unittest.TestCase):
     """
     @classmethod
     def setUpClass(cls):
-        # 载入测试配置
-        app = create_app(testing=True)
-        cls.app = app
+        pass
 
 
 class DBTestCase(BaseTestCase):
     """
     涉及数据库测试，继承此class
     """
+    @staticmethod
+    def remove_db_file():
+        import os
+        if os.path.exists('flask_restapi.db'):
+            os.remove('flask_restapi.db')
+        return
+
     @classmethod
     def setUpClass(cls):
-        # 初始化数据库
-        create_tables()
+        pass
+        # 考虑清空测试表数据
 
     @classmethod
     def tearDownClass(cls):
-        drop_tables()
+        cls.remove_db_file()
+
+

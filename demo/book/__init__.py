@@ -5,7 +5,7 @@ __author__ = 'dracarysX'
 
 from flask import Blueprint
 # dracarys import
-from dracarys.core.utils import register_api
+from flask_restapi.utils import register_api
 from .views import BookView
 
 book_blueprint = Blueprint('books', __name__, url_prefix='/books')

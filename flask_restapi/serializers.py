@@ -47,7 +47,7 @@ class BaseSerializer(object):
         def _get_instance(_obj, _key):
             """
             >>> _get_instance(book, 'author.school')
-            school
+            author
             """
             k = _key.split('.')
             k.reverse()
@@ -55,11 +55,7 @@ class BaseSerializer(object):
             while len(k) > 0:
                 v = k.pop()
                 if instance is not None and v in instance._meta.fields:
-                    if not isinstance(instance._meta.fields[v], ForeignKeyField):
-                        instance = getattr(instance, v)
-                    else:
-                        if getattr(instance, '{}_id'.format(v)) is not None:
-                            instance = getattr(instance, v)
+                    instance = getattr(instance, v)
                 else:
                     instance = None
             return instance

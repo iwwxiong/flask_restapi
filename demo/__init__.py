@@ -2,12 +2,10 @@
 
 import os
 from flask_bcrypt import Bcrypt
-# dracarys import
+# flask_restapi import
 from .middlewares.method_override import HTTPMethodOverrideMiddleware
-from .core.app import APIFlask
-from .core.exceptions import APIError
-from .core.responses import APIResponse
-from .core.db import Database
+from flask_restapi.app import APIFlask
+from flask_restapi.db import Database
 
 
 def create_app(testing=False):

@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from peewee import *
-# dracarys import
-from dracarys.core.model import UUIDBaseModel
-from dracarys.author.models import Author
+# flask_restapi import
+from flask_restapi.model import UUIDBaseModel
+from ..author.models import Author
 
 
 class Book(UUIDBaseModel):

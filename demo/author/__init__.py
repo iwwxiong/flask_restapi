@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
-# dracarys import
-from dracarys.core.utils import register_api
+# flask_restapi import
+from flask_restapi.utils import register_api
 from .views import AuthorView
 
 author_blueprint = Blueprint('authors', __name__, url_prefix='/authors')

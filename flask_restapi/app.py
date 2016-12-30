@@ -6,6 +6,7 @@ from flask import Flask, request
 from flask._compat import reraise
 from werkzeug._compat import string_types, text_type
 from werkzeug.exceptions import HTTPException
+from peewee import SqliteDatabase
 # dracarys import
 from .responses import APIResponse
 from .renders import JSONRender
@@ -17,6 +18,13 @@ class APIFlask(Flask):
     自定义APIFlask
     """
     response_class = APIResponse
+
+    def __init__(self, *args, **kwargs):
+        super(APIFlask, self).__init__(*args, **kwargs)
+        self.config.update({
+            'DB_ENGINE': SqliteDatabase,
+            'DATABASE': {'database': 'flask_restapi.db'}
+        })
 
     def make_response(self, rv):
         """

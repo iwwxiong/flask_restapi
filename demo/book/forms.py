@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from wtforms.validators import DataRequired, Length
-# dracarys import
-from dracarys.core.validators import Unique, Foreign
-from dracarys.core.fields import ForeignField, StringField
-from dracarys.core.forms import PeeweeForm
-from dracarys.author.models import Author
-from dracarys.book.models import Book
+# flask_restapi import
+from flask_restapi.validators import Unique, Foreign
+from flask_restapi.fields import ForeignField, StringField
+from flask_restapi.forms import PeeweeForm
+from ..author.models import Author
+from .models import Book
 
 
 class BookForm(PeeweeForm):

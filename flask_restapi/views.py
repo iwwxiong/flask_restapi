@@ -165,9 +165,8 @@ class DeleteMixin(FormMixin, SingleObjectMixin):
     """
     def _delete(self, **kwargs):
         obj = self.get_obj()
-        # obj.delete().execute()
         obj.delete_instance()
-        return JSONRender(message=u'删除成功。')
+        return JSONRender(message=u'delete success.')
 
 
 class DeleteView(DeleteMixin, MethodView):

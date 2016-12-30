@@ -3,7 +3,7 @@
 
 from flask_script import Command
 # dracarys import
-from scripts import create_tables
+from demo.scripts import create_tables
 
 
 class Syncdb(Command):

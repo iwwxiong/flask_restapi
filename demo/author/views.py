@@ -4,7 +4,7 @@
 from flask.views import MethodView
 from flask import request, g, current_app
 # dracarys import
-from dracarys.core.views import APIMethodView
+from flask_restapi.views import APIMethodView
 from .models import Author
 from .forms import AuthorForm
 

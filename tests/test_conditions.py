@@ -1,10 +1,26 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# dracarys import
+# flask_restapi import
+from peewee import *
 from tests import BaseTestCase
-from dracarys.core.conditions import *
-from dracarys.author.models import Author
+from flask_restapi.conditions import *
+from flask_restapi.model import UUIDBaseModel
+
+
+class Author(UUIDBaseModel):
+    """
+    作者
+    """
+    id = PrimaryKeyField()
+    name = CharField(max_length=50, unique=True)
+    age = IntegerField(default=0)
+
+    class Meta:
+        db_table = 'Author'
+
+    def __repr__(self):
+        return u'<Author {}>'.format(self.name)
 
 
 class EqTests(BaseTestCase):

@@ -2,11 +2,11 @@
 
 from wtforms import IntegerField
 from wtforms.validators import DataRequired, Length, NumberRange
-# dracarys import
-from dracarys.core.fields import StringField
-from dracarys.core.forms import PeeweeForm
-from dracarys.core.validators import Unique
-from dracarys.author.models import Author
+# flask_restapi import
+from flask_restapi.fields import StringField
+from flask_restapi.forms import PeeweeForm
+from flask_restapi.validators import Unique
+from .models import Author
 
 
 class AuthorForm(PeeweeForm):

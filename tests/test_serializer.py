@@ -1,36 +1,58 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# dracarys import
+# flask_restapi import
+from peewee import *
 from tests import DBTestCase
-from dracarys.author.models import Author
-from dracarys.book.models import Book
-from dracarys.core.serializers import PeeweeSerializer
+from flask_restapi.serializers import PeeweeSerializer
+from flask_restapi.model import UUIDBaseModel
+from flask_restapi.app import APIFlask
+from flask_restapi.db import Database
+from tests import clear_tables
+
+app = APIFlask(__name__)
+app.config['TESTING'] = True
+db = Database(app, app.config.get('DB_ENGINE')(**app.config['DATABASE']))
 
 
-def init_data():
+class Author(UUIDBaseModel):
     """
-    初始化数据
+    作者
     """
-    Author(name='wwxiong', age=24).save()
-    Author(name='dracarys', age=100).save()
-    Book(name='python', author=Author.get(name='wwxiong')).save()
-    Book(name='javascript', author=Author.get(name='dracarys')).save()
-    return
+    id = PrimaryKeyField()
+    name = CharField(max_length=50, unique=True)
+    age = IntegerField(default=0)
+
+    class Meta:
+        db_table = 'Author'
+
+    def __repr__(self):
+        return u'<Author {}>'.format(self.name)
+
+
+class Book(UUIDBaseModel):
+    """
+    书籍
+    """
+    id = PrimaryKeyField()
+    name = CharField(max_length=255, unique=True)
+    author = ForeignKeyField(Author, related_name='books')
+
+    class Meta:
+        db_table = 'Book'
+
+    def __repr__(self):
+        return u'<Book {}>'.format(self.name)
 
 
 class PeeweeSerializerTests(DBTestCase):
     """
 
     """
-    @classmethod
-    def setUpClass(cls):
-        super(PeeweeSerializerTests, cls).setUpClass()
-        init_data()
-        cls.a1 = Author.get(name='wwxiong')
-        cls.a2 = Author.get(name='dracarys')
-        cls.b1 = Book.get(name='python')
-        cls.b2 = Book.get(name='javascript')
+    a1 = Author(name='wwxiong', age=24)
+    a2 = Author(name='dracarys', age=100)
+    b1 = Book(name='python', author=a1)
+    b2 = Book(name='javascript', author=a2)
 
     def test_serializer_without_select(self):
         searializer = PeeweeSerializer(obj=self.a1)
@@ -38,33 +60,30 @@ class PeeweeSerializerTests(DBTestCase):
         self.assertEqual(data['name'], 'wwxiong')
 
     def test_serializer_with_select(self):
-        searializer = PeeweeSerializer(obj=self.a2, select_args=['id', 'name'])
+        searializer = PeeweeSerializer(obj=self.a2, select_args=['name'])
         data = searializer.data()
         self.assertEqual(data['name'], 'dracarys')
-        self.assertIn('id', data)
 
     def test_foreign_serializer_without_select(self):
         searializer = PeeweeSerializer(obj=self.b1)
         data = searializer.data()
         self.assertEqual(data['name'], 'python')
-        self.assertEqual(data['author'], self.a1.id)
 
     def test_foreign_serializer_with_select(self):
-        searializer = PeeweeSerializer(obj=self.b2, select_args=['id', 'name', ['author.name', 'author.age']])
+        searializer = PeeweeSerializer(obj=self.b2, select_args=['name', ['author.name', 'author.age']])
         data = searializer.data()
         self.assertEqual(data['name'], 'javascript')
         self.assertEqual(data['author']['age'], 100)
 
     def test_serializer_object_list_without_select(self):
-        serializer = PeeweeSerializer(object_list=Author.select().where(Author.age == 24))
+        serializer = PeeweeSerializer(object_list=[self.a1])
         data = serializer.data()
         self.assertEqual(len(data), 1)
         self.assertEqual(data[0]['name'], 'wwxiong')
 
     def test_serializer_object_list_with_select(self):
-        serializer = PeeweeSerializer(object_list=Author.select().where(Author.age == 100), select_args=['name'])
+        serializer = PeeweeSerializer(object_list=[self.a2], select_args=['name'])
         data = serializer.data()
         self.assertEqual(len(data), 1)
         self.assertNotIn('id', data[0])
         self.assertEqual(data[0]['name'], 'dracarys')
-

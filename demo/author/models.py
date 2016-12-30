@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from peewee import *
-from dracarys.core.model import UUIDBaseModel
+from flask_restapi.model import UUIDBaseModel
 
 
 class Author(UUIDBaseModel):

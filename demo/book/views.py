@@ -1,10 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint
-from flask import request, g, current_app
-# dracarys import
-from dracarys.core.views import APIMethodView
+# flask_restapi import
+from flask_restapi.views import APIMethodView
 from .models import Book
 from .forms import BookForm
 

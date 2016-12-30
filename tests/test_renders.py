@@ -1,10 +1,9 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import unittest
-# dracarys import
+# flask_restapi import
 from tests import BaseTestCase
-from dracarys.core.renders import JSONRender
+from flask_restapi.renders import JSONRender
 
 
 class JSONRenderTests(BaseTestCase):
@@ -17,6 +16,3 @@ class JSONRenderTests(BaseTestCase):
     def test_render(self):
         self.assertEqual(self.content.render(), '{"status": {"message": "Bad Request", "code": 1}, "data": []}')
 
-
-if __name__ == '__main__':
-    unittest.main()

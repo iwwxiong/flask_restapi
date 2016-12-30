@@ -1,11 +1,13 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# dracarys import
-from tests import BaseTestCase
-from dracarys.core.parsers import QueryParser
-from dracarys.book.models import Book, Author
-from dracarys.core.app import APIFlask
+# flask_restapi import
+from peewee import *
+from tests import DBTestCase
+from flask_restapi.parsers import QueryParser
+from flask_restapi.app import APIFlask
+from flask_restapi.model import UUIDBaseModel
+from flask_restapi.db import Database
 
 environ = {
     'method': 'GET',
@@ -14,6 +16,37 @@ environ = {
 
 app = APIFlask(__name__)
 app.config['TESTING'] = True
+db = Database(app, app.config.get('DB_ENGINE')(**app.config['DATABASE']))
+
+
+class Author(UUIDBaseModel):
+    """
+    作者
+    """
+    id = PrimaryKeyField()
+    name = CharField(max_length=50, unique=True)
+    age = IntegerField(default=0)
+
+    class Meta:
+        db_table = 'Author'
+
+    def __repr__(self):
+        return u'<Author {}>'.format(self.name)
+
+
+class Book(UUIDBaseModel):
+    """
+    书籍
+    """
+    id = PrimaryKeyField()
+    name = CharField(max_length=255, unique=True)
+    author = ForeignKeyField(Author, related_name='books')
+
+    class Meta:
+        db_table = 'Book'
+
+    def __repr__(self):
+        return u'<Book {}>'.format(self.name)
 
 
 class BookQP(QueryParser):
@@ -23,10 +56,15 @@ class BookQP(QueryParser):
     paginate_by = 10
 
 
-class QueryParserTests(BaseTestCase):
+class QueryParserTests(DBTestCase):
     """
 
     """
+    @classmethod
+    def tearDownClass(cls):
+        db.close_db(None)
+        super(QueryParserTests, cls).tearDownClass()
+
     def test__args_split(self):
         with app.test_request_context(**environ):
             qp = BookQP()
@@ -67,3 +105,4 @@ class QueryParserTests(BaseTestCase):
             self.assertEqual(
                 Book.select(Book.id, Book.name, Author.id, Author.name).where(Book.name**'python').order_by(
                     Book.id.desc()), query)
+

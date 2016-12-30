@@ -1,11 +1,10 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
-# dracarys import
+# flask_restapi import
 from tests import BaseTestCase
-from dracarys.core.app import APIFlask
-from dracarys.core.exceptions import APIError
+from flask_restapi.app import APIFlask
+from flask_restapi.exceptions import APIError
 
 
 app = APIFlask(__name__)
