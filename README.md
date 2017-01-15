@@ -39,53 +39,53 @@
 ## 简单使用
 
 ### 定义模型
-
-  class Author(UUIDBaseModel):
-    """
-    作者
-    """
-    id = PrimaryKeyField()
-    name = CharField(max_length=50, unique=True)
-    age = IntegerField(default=0)
-
-    class Meta:
-        db_table = 'Author'
-
-    def __repr__(self):
-        return u'<Author {}>'.format(self.name)
+	
+	class Author(UUIDBaseModel):
+		"""
+		作者
+		"""
+		id = PrimaryKeyField()
+		name = CharField(max_length=50, unique=True)
+		age = IntegerField(default=0)
+		
+		class Meta:
+		    db_table = 'Author'
+		
+		def __repr__(self):
+		    return u'<Author {}>'.format(self.name)
 
 ### 定义表单
-
-   class AuthorForm(PeeweeForm):
-    """
-    作者表单
-    """
-    name = StringField(
-        label=u'姓名',
-        validators=[DataRequired(), Length(max=50), Unique(
-            field='name',
-            message=u'该作者姓名已存在。'
-        )]
-    )
-    age = IntegerField(
-        label=u'年龄',
-        validators=[DataRequired(), NumberRange(0, 150)]
-    )
-
-    class Meta:
-        model = Author
+	
+	class AuthorForm(PeeweeForm):
+		"""
+		作者表单
+		"""
+		name = StringField(
+		    label=u'姓名',
+		    validators=[DataRequired(), Length(max=50), Unique(
+		        field='name',
+		        message=u'该作者姓名已存在。'
+		    )]
+		)
+		age = IntegerField(
+		    label=u'年龄',
+		    validators=[DataRequired(), NumberRange(0, 150)]
+		)
+		
+		class Meta:
+		    model = Author
 
 ### 定义视图
-
-  class AuthorView(APIMethodView):
-    """
-
-    """
-    model = Author
-    paginate_by = 10
-    context_object_name = 'items'
-    pk_url_kwarg = 'author_id'
-    form_class = AuthorForm
+	
+	class AuthorView(APIMethodView):
+		"""
+		作者视图
+		"""
+		model = Author
+		paginate_by = 10
+		context_object_name = 'items'
+		pk_url_kwarg = 'author_id'
+		form_class = AuthorForm
 
 以上三步我们就基本实现了`Author`的基本增删改查了。
 
