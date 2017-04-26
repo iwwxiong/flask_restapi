@@ -1,6 +1,6 @@
 # Flask restAPI开发脚手架
 
-一款简易的restapi开发脚手架。服务端采用flask，orm使用peewee，表单使用wtform。都是轻量级框架，简单易学。实现自定义查询[查询API参考网站](http://postgrest.com/api/reading/)，表单保存，模型数据序列化，APIMethodView（实现get， post， put，delete操作），异常错误处理等。
+一款简易的restapi开发脚手架。服务端采用flask，orm使用peewee，表单使用wtform。都是轻量级框架，简单易学。实现自定义查询（[查询API参考网站](http://postgrest.com/api/reading/)）。实现表单保存，模型数据序列化，APIMethodView（实现get， post， put，delete操作），异常错误处理等。
 
 ## 准备&安装
 
@@ -20,7 +20,7 @@
 
 ## 案列演示
 
-[demo介绍](https://github.com/dracarysX/flask_restapi/tree/master/demo/README.md)
+[demo](https://github.com/dracarysX/flask_restapi/tree/master/demo/README.md)演示
 
 ## 查询API
 

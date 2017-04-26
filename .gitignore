@@ -91,7 +91,7 @@ ENV/
 venv/
 *.pyc
 *.db
-config/development.py
-config/production.py
+demo/config/development.py
+demo/config/production.py
 .idea/
 .DS_Store

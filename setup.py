@@ -12,7 +12,6 @@ class MyTest(TestCommand):
 
     """
     def run_tests(self):
-        print 'test'
         tests = unittest.TestLoader().discover('tests', pattern='test_*.py')
         unittest.TextTestRunner(verbosity=1).run(tests)
 
@@ -34,7 +33,9 @@ setup(
     install_requires=[
         'peewee==2.8.5',
         'flask==0.11.1',
-        'wtforms==2.1'
+        'wtforms==2.1',
+        'flask_bcrypt==',
+        'flask-script==0.7.1'
     ],
     test_suite='nose.collector',
     tests_require=['nose'],
@@ -45,6 +46,6 @@ setup(
     ],
     keywords='Python, Flask, APIMethodView, Filtering Query API, Mysql, Peewee, RestAPI',
     long_description=u'一款简易的restapi开发脚手架。服务端采用flask，orm使用peewee，表单使用wtform。都是轻量级框架，'
-                     u'简单易学。实现自定义查询查询API参考网站，表单保存，模型数据序列化，'
+                     u'简单易学。实现自定义查询查询API参考网站。实现表单保存，模型数据序列化，'
                      u'APIMethodView（实现get， post， put，delete操作），异常错误处理等。'
 )

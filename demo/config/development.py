@@ -8,7 +8,7 @@ config for development.
 DATABASE = {
     'database': 'dracarysX',
     'user': 'dracarysX',
-    'passwd': 'Foxconn123',
+    'passwd': 'thoughtwork',
     'host': '127.0.0.1',
     'port': 3306,
 }
