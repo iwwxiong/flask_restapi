@@ -17,7 +17,8 @@ class Database(object):
         db.initialize(self.database)
 
     def connect_db(self):
-        self.database.connect()
+        # self.database.connect()
+        self.database.get_conn()
 
     def close_db(self, exc):
         if not self.database.is_closed():

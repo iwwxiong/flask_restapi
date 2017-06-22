@@ -31,11 +31,11 @@ setup(
     url='https://github.com/dracarysX/flask_restapi',
     packages=find_packages(include=['flask_restapi']),
     install_requires=[
-        'peewee==2.8.5',
-        'flask==0.11.1',
-        'wtforms==2.1',
-        'flask_bcrypt==',
-        'flask-script==0.7.1'
+        'peewee',
+        'flask',
+        'wtforms',
+        'flask_bcrypt',
+        'flask-script'
     ],
     test_suite='nose.collector',
     tests_require=['nose'],
