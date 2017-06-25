@@ -42,7 +42,6 @@ class APIResponse(Response):
 
     def get_json(self):
         """
-        返回json数据
-        :return:
+        :return: json object
         """
         return json.loads(self.get_data().decode('utf8'))

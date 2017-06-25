@@ -9,7 +9,7 @@ from ..author.models import Author
 
 class Book(UUIDBaseModel):
     """
-    书籍
+    Book model
     """
     id = PrimaryKeyField()
     name = CharField(max_length=255, unique=True)
@@ -20,5 +20,3 @@ class Book(UUIDBaseModel):
 
     def __repr__(self):
         return u'<Book {}>'.format(self.name)
-
-

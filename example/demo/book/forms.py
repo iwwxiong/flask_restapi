@@ -12,18 +12,18 @@ from .models import Book
 
 class BookForm(PeeweeForm):
     """
-    书籍表单
+    Book form
     """
     name = StringField(
-        label=u'姓名',
+        label='Name',
         validators=[DataRequired(), Length(max=255), Unique(
             field='name',
-            message=u'该书籍名称已存在。'
+            message='book is exist'
         )]
     )
     author = ForeignField(
-        label=u'作者',
-        validators=[DataRequired(), Foreign(model=Author, message=u'作者不存在')],
+        label='Author',
+        validators=[DataRequired(), Foreign(model=Author, message='author not exist')],
     )
 
     class Meta:

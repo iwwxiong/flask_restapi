@@ -14,17 +14,17 @@ def create_app(testing=False):
     Bcrypt(app)
 
     # 加载默认配置
-    app.config.from_object('config.default')
+    app.config.from_object('demo.config.default')
 
     # 加载环境变量
     environment = os.environ.get('ENVIRONMENT', 'development')
 
     # 载入相关配置
-    app.config.from_object('config.{}'.format(environment))
+    app.config.from_object('demo.config.{}'.format(environment))
 
     # 加载测试配置
     if testing:
-        app.config.from_object('config.test')
+        app.config.from_object('demo.config.test')
 
     # 初始化数据
     Database(app, app.config.get('DB_ENGINE')(**app.config['DATABASE']))

@@ -7,7 +7,7 @@ from flask_restapi.model import UUIDBaseModel
 
 class Author(UUIDBaseModel):
     """
-    作者
+    Author model
     """
     id = PrimaryKeyField()
     name = CharField(max_length=50, unique=True)
@@ -18,4 +18,3 @@ class Author(UUIDBaseModel):
 
     def __repr__(self):
         return u'<Author {}>'.format(self.name)
-

@@ -19,4 +19,3 @@ class HTTPMethodOverrideMiddleware(object):
         if method in self.bodyless_methods:
             environ['CONTENT_LENGTH'] = '0'
         return self.app(environ, start_response)
-

@@ -4,7 +4,7 @@
 
 def register_api(bp, view, endpoint, pk='id', pk_type='int'):
     """
-    注册api视图url
+    register api url
     """
     view_func = view.as_view(endpoint)
     bp.add_url_rule('', view_func=view_func, methods=['GET', ])
@@ -39,7 +39,7 @@ def set_dict(_dict, _key, _value):
         return _dict
     i = 0
     temp_dict = _dict
-    while i <= length-1:
+    while i <= length - 1:
         if _key[i] not in temp_dict:
             if length - i > 1:
                 temp_dict[_key[i]] = {}

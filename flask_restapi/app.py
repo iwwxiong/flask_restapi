@@ -15,7 +15,7 @@ from .exceptions import APIError
 
 class APIFlask(Flask):
     """
-    自定义APIFlask
+    APIFlask inheritance Flask, and override make_response, handle_api_exception, handle_user_exception
     """
     response_class = APIResponse
 
@@ -27,9 +27,6 @@ class APIFlask(Flask):
         })
 
     def make_response(self, rv):
-        """
-
-        """
         status_or_headers = headers = None
         if isinstance(rv, tuple):
             rv, status_or_headers, headers = rv + (None,) * (3 - len(rv))
@@ -67,7 +64,7 @@ class APIFlask(Flask):
 
     def handle_user_exception(self, e):
         """
-        自定义异常处理
+        override handle_user_exception and redirect the exception to handle_api_exception
         """
         exc_type, exc_value, tb = sys.exc_info()
         assert exc_value is e

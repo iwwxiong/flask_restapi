@@ -6,7 +6,7 @@ from peewee import *
 from wtforms import IntegerField as WTFIntegerField
 from wtforms.validators import DataRequired, Length, NumberRange
 # flask_restapi import
-from . import DBTestCase
+from tests import DBTestCase
 from tests import clear_tables
 from flask_restapi.views import *
 from flask_restapi.app import APIFlask

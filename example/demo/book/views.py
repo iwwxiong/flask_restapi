@@ -8,9 +8,7 @@ from .forms import BookForm
 
 
 class BookView(APIMethodView):
-    """
 
-    """
     model = Book
     paginate_by = 10
     context_object_name = 'items'

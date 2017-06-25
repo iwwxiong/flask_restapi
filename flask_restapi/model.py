@@ -21,6 +21,6 @@ class BaseModel(Model):
 
 class UUIDBaseModel(BaseModel):
     """
-    自动添加uuid(高并发可能产生问题，暂忽略)
+    auto uuid field
     """
     uuid = CharField(default=_uuid, unique=True)

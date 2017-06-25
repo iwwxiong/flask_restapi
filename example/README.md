@@ -1,30 +1,30 @@
-# Demo介绍
+# Example
 
-## 启动
+## Run
 
     > python manage.py syncdb
     > python manage.py runserver
 
-然后我们就可以直接访问`http://127.0.0.1:5000`。目前脚手架中间实现了`Book`和`Author`两个简单测试app。
+Then we can view `http://127.0.0.1:5000`. The example just contains `Book` and `Author` apps.
 
-## 使用
+## Usage
 
-### 新增
+### create
 
     > curl -d "name=wwx&age=20" http://127.0.0.1:5000/authors
     {"status": {"message": "200 OK", "code": 0}, "data": {"id": 1}}
 
-###　查询
+### select
 
     > curl http://127.0.0.1:5000/authors/1?select=id,name
     {"status": {"message": "200 OK", "code": 0}, "data": {"name": "wwx", "id": 1}}
 
-### 修改
+### update
 
     > curl -d "name=yyf" -H X_METHOD_OVERRIDE:PUT http://127.0.0.1:5000/authors/1
     {"status": {"message": "200 OK", "code": 0}, "data": {"id": 1}}
 
-### 删除
+### delete
 
     > curl -H X_METHOD_OVERRIDE:DELETE http://127.0.0.1:5000/authors/1
     {"status": {"message": "delete success., "code": 0}, "data": []}

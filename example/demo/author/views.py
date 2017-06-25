@@ -10,9 +10,7 @@ from .forms import AuthorForm
 
 
 class AuthorView(APIMethodView):
-    """
 
-    """
     model = Author
     paginate_by = 10
     context_object_name = 'items'

@@ -10,7 +10,7 @@ SECRET_KEY = 'dracarysX'
 
 # session
 SESSION_COOKIE_NAME = 'sid'
-PERMANENT_SESSION_LIFETIME = 3600 * 24 * 7  # 7天
+PERMANENT_SESSION_LIFETIME = 3600 * 24 * 7  # senven day
 
 # Database
 
