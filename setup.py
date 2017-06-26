@@ -13,11 +13,6 @@ class MyTest(TestCommand):
         unittest.TextTestRunner(verbosity=1).run(tests)
 
 
-if sys.version_info.major != 2 and sys.version_info.minor != 7:
-    print("python version must be 2.7.x")
-    sys.exit()
-
-
 setup(
     name='flask_restapi',
     version='0.2.0',
@@ -37,8 +32,12 @@ setup(
     test_suite='nose.collector',
     tests_require=['nose'],
     classifiers=[
-        'Framework :: Flask',
+        'Framework :: Flask-Restapi',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'License :: MIT',
     ],
     keywords='Python, Flask, APIMethodView, Filtering Query API, Mysql, Peewee, RestAPI',

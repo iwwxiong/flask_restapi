@@ -2,10 +2,14 @@
 
 ## Run
 
+This demo require mysql service, so we must start mysql server(mysql config see `demo/config/default.py`). then wo can follow this.
+
+    > source venv/bin/activate
+    > pip install mysql-python
     > python manage.py syncdb
     > python manage.py runserver
 
-Then we can view `http://127.0.0.1:5000`. The example just contains `Book` and `Author` apps.
+Then we can view `http://127.0.0.1:5000` for test. The example contains `Book` and `Author` apps.
 
 ## Usage
 

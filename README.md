@@ -103,7 +103,7 @@ After that we achieve create、update、select and delete for `Author`.
 
 ## Example
 
-View [Example](https://github.com/dracarysX/flask_restapi/tree/master/demo/README.md)
+View [Example](https://github.com/dracarysX/flask_restapi/blob/master/example/README.md)
 
 
 ## Contact
