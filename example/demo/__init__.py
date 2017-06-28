@@ -27,7 +27,7 @@ def create_app(testing=False):
         app.config.from_object('demo.config.test')
 
     # 初始化数据
-    Database(app, app.config.get('DB_ENGINE')(**app.config['DATABASE']))
+    Database(app, app.config.get('DB_ENGINE')(app.config['DATABASE']))
 
     # 中间件
     app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)

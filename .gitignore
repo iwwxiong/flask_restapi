@@ -90,8 +90,8 @@ ENV/
 #
 venv/
 *.pyc
-*.db
-demo/config/development.py
-demo/config/production.py
+.db
+example/demo/config/development.py
+example/demo/config/production.py
 .idea/
 .DS_Store

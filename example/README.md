@@ -2,10 +2,7 @@
 
 ## Run
 
-This demo require mysql service, so we must start mysql server(mysql config see `demo/config/default.py`). then wo can follow this.
-
     > source venv/bin/activate
-    > pip install mysql-python
     > python manage.py syncdb
     > python manage.py runserver
 

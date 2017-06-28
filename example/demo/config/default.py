@@ -3,7 +3,7 @@
 """
 default config.
 """
-from peewee import MySQLDatabase
+from peewee import SqliteDatabase
 
 DEBUG = True
 SECRET_KEY = 'dracarysX'
@@ -14,17 +14,11 @@ PERMANENT_SESSION_LIFETIME = 3600 * 24 * 7  # senven day
 
 # Database
 
-# mysql
+# sqlite
 
-DB_ENGINE = MySQLDatabase
+DB_ENGINE = SqliteDatabase
 
-DATABASE = {
-    'database': 'dracarysX',
-    'user': 'root',
-    'passwd': '',
-    'host': '127.0.0.1',
-    'port': 3306,
-}
+DATABASE = 'example.db'
 
 # redis
 

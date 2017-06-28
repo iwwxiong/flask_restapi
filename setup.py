@@ -27,12 +27,12 @@ setup(
         'flask',
         'wtforms',
         'flask_bcrypt',
-        'flask-script'
+        'flask-script',
+        'peewee-rest-query'
     ],
     test_suite='nose.collector',
     tests_require=['nose'],
     classifiers=[
-        'Framework :: Flask-Restapi',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
